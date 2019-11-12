@@ -40,6 +40,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.tangxiaolv.telegramgallery.GalleryActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tangxiaolv.telegramgallery.GalleryConfig;
@@ -164,11 +167,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                PermissionUtils.permission(PermissionConstants.STORAGE)
+                        .callback(new PermissionUtils.SimpleCallback() {
+                            @Override
+                            public void onGranted() {
+                                Intent i = new Intent(
+                                        Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                            }
+
+                            @Override
+                            public void onDenied() {
+                                ToastUtils.showShort("没有获取到权限");
+                            }
+                        })
+                        .request();
             }
         });
 
