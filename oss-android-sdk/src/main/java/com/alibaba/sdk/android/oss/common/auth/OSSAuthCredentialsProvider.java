@@ -50,7 +50,7 @@ public class OSSAuthCredentialsProvider extends OSSFederationCredentialProvider 
         try {
             URL stsUrl = new URL(mAuthServerUrl);
             HttpURLConnection conn = (HttpURLConnection) stsUrl.openConnection();
-            conn.setRequestProperty("Authorization", "bearer a9c74119-3e72-41ee-99be-cf4eeaeae1f9");
+            conn.setRequestProperty("Authorization", "bearer 0feedb79-32df-4854-8853-01afa5a19c62");
             conn.setConnectTimeout(10000);
             InputStream input = conn.getInputStream();
             authData = IOUtils.readStreamAsString(input, OSSConstants.DEFAULT_CHARSET_NAME);
